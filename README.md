@@ -7,7 +7,7 @@ This DAC uses the https://github.com/SkynetHQ/skystandards data structures
 ## Usage
 
 Using the library is very straightforward. In this section we'll show an example
-of how a skapp could use the content record library and record user interactions.
+of how a skapp could use the Feed DAC library and create a new post.
 
 ```typescript
 import { SkynetClient } from "skynet-js";

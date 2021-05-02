@@ -55,6 +55,7 @@ export class FeedDAC extends DacLibrary implements IFeedDAC {
 
     if (userId.startsWith('ed25519-')) {
       userId = userId.substring(8);
+    } else if (userId.length == 64) {
     } else {
       throw Error('FeedDAC: Unsupported userId format')
     }
@@ -78,6 +79,9 @@ export class FeedDAC extends DacLibrary implements IFeedDAC {
 
     if (userId.startsWith('ed25519-')) {
       userId = userId.substring(8);
+    } else if (userId.length == 64) {
+    } else {
+      throw Error('FeedDAC: Unsupported userId format')
     }
 
     let skappsIndex = await this.downloadFile<IDictionary>(userId, `${DAC_DOMAIN}/skapps.json`);
