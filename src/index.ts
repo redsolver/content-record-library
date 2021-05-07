@@ -89,12 +89,14 @@ export class FeedDAC extends DacLibrary implements IFeedDAC {
       yield [];
       return;
     }
-    let skapps = Object.keys(skappsIndex)
+    let skappsIndexList = Object.keys(skappsIndex)
 
-    if (skapps.length == 0) {
+    if (skappsIndexList.length == 0) {
       yield [];
       return;
     }
+
+    let skapps: string[] = []
 
     let buffer: Post[] = []
 
@@ -104,16 +106,17 @@ export class FeedDAC extends DacLibrary implements IFeedDAC {
     const skappCurrentPage = new Map<string, number>();
     const limitBeforePageEnd = new Map<string, number>();
 
-    for (const skapp of skapps) {
+    for (const skapp of skappsIndexList) {
       let index = await this.downloadFile<IIndex>(userId, `${DAC_DOMAIN}/${skapp}/posts/index.json`);
       if (!index) {
-        const index = skapps.indexOf(skapp, 0);
-        if (index > -1) {
-          skapps.splice(index, 1);
-        }
+        /*    const index = skapps.indexOf(skapp, 0);
+           if (index > -1) {
+             skapps.splice(index, 1);
+           } */
       } else {
         skappTimestampLimit.set(skapp, index.latestItemTimestamp ?? 0);
         skappCurrentPage.set(skapp, index.currPageNumber);
+        skapps.push(skapp)
       }
     }
 
